@@ -41,7 +41,6 @@ function Signup() {
     const [isPhoneValid, setIsPhoneValid] = useState(false);
     const [isAddrValid, setIsAddrValid] = useState(false);
     const [isGenderValid, setIsGenderValid] = useState(false);
-    const [isBirthValid, setIsBirthValid] = useState(false);
 
     // 아이디
     const onChangeID = useCallback(async(e) => {

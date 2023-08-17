@@ -6,7 +6,6 @@ import { useState } from "react";
 
 function Footer() {
     const [select, setSelect] = useState("home");
-    console.log(select)
 
     // onpopstate
     window.onpopstate = function(event) {
@@ -33,7 +32,7 @@ function Footer() {
 
                 <Btn onClick={() => {
                     setSelect('favo')
-                    alert(select)
+                    window.location.href="/favo"
                 }}>
                     <GoHeartFill  style={{
                         width: "45px", height: "45px",
@@ -43,7 +42,7 @@ function Footer() {
 
                 <Btn onClick={() => {
                     setSelect('deliver')
-                    alert(select)
+                    window.location.href="/deliver"
                 }}>
                     <FaBox  style={{
                         width: "45px", height: "45px",
@@ -53,7 +52,7 @@ function Footer() {
                 
                 <Btn onClick={() => {
                     setSelect('mypage')
-                    alert(select)
+                    window.location.href="/mypage"
                 }}>
                     <GoPersonFill  style={{
                         width: "45px", height: "45px",

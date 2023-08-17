@@ -116,7 +116,7 @@ function Order() {
                         real_name: account,
                     }
                 );
-                console.log("res.data" + res);
+                console.log(res);
             }
             catch (e) {
                 console.error(e);
@@ -128,7 +128,7 @@ function Order() {
 
 
     const navigate = useNavigate();
-    
+
     const location = useLocation();
     console.log(location.state.info);
 
