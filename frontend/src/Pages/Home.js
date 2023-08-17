@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import GlobalStyle from "../GlobalStyle";
 import { styled } from "styled-components";
 import { Container, Title, Center } from "../styles/basicStyles.js";
@@ -7,6 +7,7 @@ import CategoryList from "../Components/CategoryList";
 import BestProduct from "../Components/BestProduct";
 import SimpleSlider from "../Components/SimpleSlider";
 import Footer from "../Components/Footer";
+import axios from "axios";
 
 
 function Home() {
@@ -27,26 +28,27 @@ function Home() {
     const CateList = lists.map((v) => (<CategoryList name={v[1]} icon={v[2]}/>))
     const BestList = best.map((v) => (<BestProduct name={v[1]} icon={v[2]} price={v[3]}/>))
     
+    const [product, setProduct] = useState();
+
     //리스트 받아오기
-    // const getProduct = async() => {
-    //     const json = await (    
-    //         await fetch(
-    //             `http://localhost:8000/results/${query}`
-    //         )
-    //     ).json();
-    //     setProduct(json)
-    //     setLoading(false);
-    // };
-    // useEffect(()=>{
-    //     getProduct()
-    // })
+    const getProduct = async() => {
+        try {
+            const res = await axios.get(
+                    "http://127.0.0.1:8000/api/products/"
+                )
+            setProduct(res.data)
+            console.log(res.data)
+        }
+        catch(e) {
+            console.log(e)
+        }
+    };
+
+    useEffect(()=>{
+        getProduct()
+    }, [])
     
-    // //getID
-    //     const getID = (id) => {axios.get(
-    //         `http://localhost:8000/results/${id}`
-    //     )
-    //         .then((response)=>setId(response.data))
-    // }
+    console.log("product: " + product)
 
 
     return (

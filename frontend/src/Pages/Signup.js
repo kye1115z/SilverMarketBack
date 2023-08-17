@@ -4,6 +4,7 @@ import { Container, Header, HeaderText, Input, InputTitle } from "../styles/basi
 import { GoChevronLeft } from "react-icons/go";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Signup() {
     // 입력값 상태값
@@ -207,17 +208,33 @@ function Signup() {
 
     // 제출버튼
     const navigate = useNavigate();
-    const onsubmit = () => {
-        console.log(isIdValid)
-        console.log(isPwValid)
-        console.log(isEmailValid)
-        console.log(isNameValid)
-        console.log(isPhoneValid)
-        console.log(isAddrValid)
-        console.log(isGenderValid)
-        console.log(checkID)
-        alert("회원가입에 성공했습니다!");
-        navigate("/login");
+    const onsubmit = async () => {
+        console.log(id)
+        console.log(email)
+        console.log(pw)
+        console.log(pw)
+        console.log(phone)
+        console.log(addr)
+        try {   
+            console.log("try!")
+            const res = await axios.options(
+                'http://127.0.0.1:8000/api/accounts/signup/', 
+                {
+                    username: id,
+                    email: email,
+                    password: pw,
+                    phone: phone,
+                    address: addr
+                }
+            );
+            console.log("res.data" + res);
+            alert("회원가입에 성공했습니다!");
+            navigate("/login");
+        }
+        catch (e) {
+            console.error(e);
+        }
+
     }
 
     // 아이디 중복 버튼 색상
@@ -388,14 +405,12 @@ function Signup() {
                     })}
                 </Select>
             </InputBox>
-
+        </form>
             <Btn 
                 onClick={onsubmit}
-                type="submit"
                 disabled={!isAllValid}>
                         가입하기
             </Btn>
-        </form>
         </Container>
         </>
     );

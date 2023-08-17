@@ -3,6 +3,7 @@ import GlobalStyle from "../GlobalStyle";
 import { Header, HeaderText, Container, Input, InputTitle } from "../styles/basicStyles";
 import { GoChevronLeft } from "react-icons/go";
 import { styled } from "styled-components";
+import axios from "axios";
 
 function Order() {
     const detail = {
@@ -97,6 +98,27 @@ function Order() {
             setIsAccValid(true)
         }
     })
+
+    // 서버 전송
+    const onClick = async () => {
+        try {   
+            console.log("try!")
+            const res = await axios.options(
+                'http://127.0.0.1:8000/purchaseinfo/', 
+                {
+                    name: name,
+                    contact: phone,
+                    address: addr,
+                    real_name: account,
+                }
+            );
+            console.log("res.data" + res);
+        }
+        catch (e) {
+            console.error(e);
+        }
+
+    }
 
     return(
         <>
@@ -196,7 +218,7 @@ function Order() {
             </InfoBox>
         </Container>
         <Container style={{paddingTop: "30px"}}>
-            <BuyBtn>
+            <BuyBtn onClick={onClick}>
                 구매하기
             </BuyBtn>
         </Container>
