@@ -33,6 +33,8 @@ urlpatterns = [
     path('api/products/simple/', views.simple_product_list, name='simple-product-list'),
     path('', include('products.urls')),
     path('api/', include('videoapp.urls')),
+     path('api/', include('post.urls')),
+    path('purchaseinfo/', include('purchaseinfo.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

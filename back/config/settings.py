@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'users',
-    'videoapp'
+    'videoapp',
+    'post',
+    'purchaseinfo',
 ]
 
 MIDDLEWARE = [
