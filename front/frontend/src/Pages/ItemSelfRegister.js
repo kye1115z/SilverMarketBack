@@ -49,16 +49,17 @@ function ItemSelfRegister() {
       setIsNameValid(true);
     }
   });
+
   //카테고리
   const onChangeCategory = useCallback(async (e) => {
     const currCategory = e.target.value;
     setCategory(currCategory);
 
-    if (currCategory.length < 2 || currCategory.length > 20) {
-      setCategoryMsg("카테고리를 선택해주세요");
+    if (currCategory.length < 2 || currCategory.length > 4) {
+      setCategoryMsg("과일, 채소, 유제품, 고기 중 카테고리를 선택해주세요.");
       setIsCategoryValid(false);
     } else {
-      setCategoryMsg("");
+      setCategoryMsg(`${currCategory}을(를) 선택하셨습니다.`);
       setIsCategoryValid(true);
     }
   });
@@ -67,7 +68,7 @@ function ItemSelfRegister() {
   const onChangePrice = (getPrice) => {
     const currPrice = getPrice;
     setPrice(currPrice);
-    const priceRegExp = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+    const priceRegExp = /^[0-9]+$/;
 
     if (!priceRegExp.test(currPrice)) {
       setPriceMsg("숫자만 입력해주세요.");

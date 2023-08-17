@@ -16,7 +16,7 @@ function Guide1() {
   return (
     <>
       <div className="Guide1">
-        <Btn onClick={onsubmit} type="submit">
+        <Btn onClick={() => {window.location.href="/guide2"}} type="submit">
           다음
         </Btn>
         <img className="Guide1_image" alt="guide1" src="img/guide1.png"></img>

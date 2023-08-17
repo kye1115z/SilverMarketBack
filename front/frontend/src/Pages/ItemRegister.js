@@ -20,9 +20,12 @@ export default function ItemRegister() {
     border-color: #bcc6bf;
     border-radius: 20px;
     width: 136px;
-    height: 248px;
+    height: 70vw;
     margin: 10px;
+    font-size: 1rem;
+    font-weight: bold;
   `;
+
   return (
     <>
       <GlobalStyle />
@@ -40,11 +43,17 @@ export default function ItemRegister() {
       </Header>
       <Container>
         <row>
-          <Button onClick={ItemRegister}>동영상으로 등록하기</Button>
-          <Button onClick={ItemRegister}>직접 등록하기</Button>
+          <Button onClick={() => {window.location.href="/itemvideoregister"}}>동영상으로 <br /> 등록하기</Button>
+          <Button onClick={() => {window.location.href="/itemselfregister"}}>직접 <br /> 등록하기</Button>
         </row>
-        <Button onClick={ItemRegister}>상품 등록 가이드 보기</Button>
+        <Button 
+          style={{width: "75vw", height: "136px"}}
+          onClick={() => {window.location.href="/guide1"}}>
+            <p style={{fontSize: "0.8rem", fontWeight: "normal"}}>등록 방법을 모르겠다면?</p>
+            상품 등록 가이드 보기
+        </Button>
       </Container>
     </>
   );
 }
+

@@ -10,10 +10,10 @@ function First() {
                 <Container>
                     <div style={{height: "130px", backgroundColor: "blue"}}></div>
                     <P>은 빛 시 장</P>
-                    <Btn>
+                    <Btn onClick={() => {window.location.href="/"}}>
                         구매하기
                     </Btn>
-                    <Btn>
+                    <Btn onClick={() => {window.location.href="/itemregister"}}>
                         상품 등록하기
                     </Btn>
                 </Container>
@@ -44,12 +44,12 @@ const P = styled.p`
 `;
 
 const Btn = styled.button`
-    width: 40%;
+    width: 45%;
     height: 53px;
     border-radius: 100px;
     border: none;
     background: linear-gradient(329.82deg, #23AA49 18.21%, #4BC06C 109.1%);
     margin-bottom: 20px;
     color: white;
-    
+    font-size: 1.1rem;
 `;

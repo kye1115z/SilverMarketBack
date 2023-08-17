@@ -226,9 +226,9 @@ function Signup() {
                     address: addr
                 }
             );
-            console.log("res.data" + res);
-            alert("회원가입에 성공했습니다!");
-            navigate("/login");
+            console.log(res.data);
+            // alert("회원가입에 성공했습니다!");
+            // navigate("/login");
         }
         catch (e) {
             console.error(e);

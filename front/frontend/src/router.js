@@ -14,6 +14,7 @@ import Guide3 from "./Pages/Guide3";
 import Guide4 from "./Pages/Guide4";
 import Guide5 from "./Pages/Guide5";
 import First from './Pages/First';
+import Mypage from "./Pages/Mypage";
 function Router() {
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ function Router() {
         <Route path="/guide3" element={<Guide3 />} />
         <Route path="/guide4" element={<Guide4 />} />
         <Route path="/guide5" element={<Guide5 />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );

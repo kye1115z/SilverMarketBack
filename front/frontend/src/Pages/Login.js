@@ -84,20 +84,13 @@ export default function Login() {
             //   },
             // }
         );
-        console.log("res.data" + res);
-        navigate("/");
+        console.log(res.data.detail);
+        if()
+        // navigate("/");
     }
     catch (e) {
         console.error(e);
     }
-
-
-    // if (ID === User.email && pw === User.pw) {
-    //   alert("로그인에 성공했습니다.");
-    //   navigate("/");
-    // } else {
-    //   alert("등록되지 않은 회원입니다.");
-    // }
     
   };
 
