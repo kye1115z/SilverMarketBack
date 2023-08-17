@@ -216,7 +216,7 @@ function Signup() {
         console.log(addr)
         try {   
             console.log("try!")
-            const res = await axios.options(
+            const res = await axios.post(
                 'http://127.0.0.1:8000/api/accounts/signup/', 
                 {
                     username: id,

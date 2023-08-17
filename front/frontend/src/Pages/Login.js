@@ -3,11 +3,7 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import GlobalStyle from "../GlobalStyle";
 import { Container, Text, Input } from "../styles/basicStyles.js";
-
-const User = {
-  email: "test2323",
-  pw: "test2323@@@",
-};
+import axios from "axios";
 
 
 
@@ -71,38 +67,37 @@ export default function Login() {
   };
 
   // 로그인 버튼 클릭 시
-  const onClickConfirmButton = () => {
-
-    //Id, pw db 검사
-    // axios.post('#', null, {
-    //   params: {
-    //     'user_id': ID,
-    //     'user_pw': pw
-    //   }
-    // })
-    // .then(res=> {
-    //     console.log("res : " + res)
-    //     if(res.data.userID === undefined) {
-    //       alert("입력하신 id가 일치하지 않습니다.")
-    //     }
-    //     else if(res.data.userID === null){
-    //       alert("입력하신 비밀번호가 일치하지 않습니다.")
-    //     }
-    //     else if(res.data.userID === inputID) {
-    //       console.log("로그인 성공")
-    //       sessionStorage.setItem('user_id', inputID)
-    //       document.location.href = "/"
-    //     }
-    // })
-    // .catch()
-
-
-    if (ID === User.email && pw === User.pw) {
-      alert("로그인에 성공했습니다.");
-      navigate("/");
-    } else {
-      alert("등록되지 않은 회원입니다.");
+  const onClickConfirmButton = async() => {
+      try {   
+        const csrfToken = window.csrfToken;
+        console.log("try!")
+        const res = await axios.post(
+            'http://127.0.0.1:8000/api/accounts/login/', 
+            {
+                username: ID,
+                password: pw,
+                'X-CSRFToken': csrfToken
+            },
+            // {
+            //   headers: {
+            //       'X-CSRFToken': csrfToken
+            //   },
+            // }
+        );
+        console.log("res.data" + res);
+        navigate("/");
     }
+    catch (e) {
+        console.error(e);
+    }
+
+
+    // if (ID === User.email && pw === User.pw) {
+    //   alert("로그인에 성공했습니다.");
+    //   navigate("/");
+    // } else {
+    //   alert("등록되지 않은 회원입니다.");
+    // }
     
   };
 

@@ -5,6 +5,7 @@ import Signup from './Pages/Signup';
 import Detail from './Pages/Detail';
 import Order from './Pages/Order';
 import ConfirmOrder from './Pages/ConfirmOrder';
+import First from './Pages/First';
 
 function Router() {
     return (
@@ -16,6 +17,7 @@ function Router() {
             <Route path='/detail' element={<Detail />} />
             <Route path='/order' element={<Order />} />
             <Route path='/confirmOrder' element={<ConfirmOrder />} />
+            <Route path='/first' element={<First />} />
             </Routes>
         </BrowserRouter>
     )
