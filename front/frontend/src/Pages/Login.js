@@ -85,7 +85,6 @@ export default function Login() {
             // }
         );
         console.log(res.data.detail);
-        if()
         // navigate("/");
     }
     catch (e) {

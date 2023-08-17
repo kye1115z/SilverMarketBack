@@ -10,6 +10,7 @@ import {
 import { GoChevronLeft } from "react-icons/go";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ItemSelfRegister() {
   // 입력값 상태값
@@ -65,10 +66,10 @@ function ItemSelfRegister() {
   });
 
   // 가격
-  const onChangePrice = (getPrice) => {
-    const currPrice = getPrice;
+  const onChangePrice = (e) => {
+    const currPrice = e.target.value;
     setPrice(currPrice);
-    const priceRegExp = /^[0-9]+$/;
+    const priceRegExp = /^[0-9]{1,20}$/;
 
     if (!priceRegExp.test(currPrice)) {
       setPriceMsg("숫자만 입력해주세요.");
@@ -76,17 +77,6 @@ function ItemSelfRegister() {
     } else {
       setPriceMsg("");
       setIsPriceValid(true);
-    }
-  };
-
-  const addHyphen = (e) => {
-    const currNumber = e.target.value;
-    setPrice(currNumber);
-    if (currNumber.length == 3 || currNumber.length == 8) {
-      setPrice(currNumber + "-");
-      onChangePrice(currNumber + "-");
-    } else {
-      onChangePrice(currNumber);
     }
   };
 
@@ -106,11 +96,12 @@ function ItemSelfRegister() {
 
   // 개당 수량 또는 중량
   const onChangeQuantity = useCallback(async (e) => {
-    const currQuantity = e.target.value;
-    setQuantity(currQuantity);
+    const currQuan = e.target.value;
+    setQuantity(currQuan);
+    const regex = /^[0-9]{1,20}$/;
 
-    if (currQuantity.length < 2 || currQuantity.length > 20) {
-      setQuantityMsg("상품명을 입력해주세요");
+    if (!regex.test(currQuan)) {
+      setQuantityMsg("숫자만 입력해주세요.");
       setIsQuantityValid(false);
     } else {
       setQuantityMsg("");
@@ -131,7 +122,7 @@ function ItemSelfRegister() {
       setIsDetailValid(true);
     }
   });
-  // 가입 버튼 활성화
+  // 버튼 활성화
   const isAllValid =
     isCategoryValid &&
     isNameValid &&
@@ -142,19 +133,31 @@ function ItemSelfRegister() {
 
   // 제출버튼
   const navigate = useNavigate();
-  const onsubmit = () => {
-    console.log(isCategoryValid);
-    console.log(isNameValid);
-    console.log(isPriceValid);
-    console.log(isOriginValid);
-    console.log(isQuantityValid);
-    console.log(isDetailValid);
-
-    alert("상품이 등록되었습니다.");
-    navigate("/login");
+  const onClick = async (e) => {
+    e.preventDefault();
+    try {   
+      console.log("try!")
+      const res = await axios.post(
+          'http://127.0.0.1:8000/api/products/', 
+          {
+              photo: "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
+              products_name: name,
+              category: category,
+              separate_weight: quantity,
+              description: detail,
+              writer: "나"
+          }
+      );
+      console.log(res);
+      // alert("회원가입에 성공했습니다!");
+      // navigate("/login");
+  }
+  catch (e) {
+      console.error(e);
+  }
   };
 
-  //회원가입 버튼 색상
+  // 버튼 색상
   const [color, setColor] = useState("");
   const Btn = styled.button`
     width: 40%;
@@ -213,7 +216,7 @@ function ItemSelfRegister() {
           <InputBox>
             <InputTitle htmlFor="price">가격</InputTitle>
             <Input
-              onChange={addHyphen}
+              onChange={onChangePrice}
               className="inputPrice"
               name="price"
               type="text"
@@ -225,7 +228,6 @@ function ItemSelfRegister() {
             <InputTitle htmlFor="origin">원산지</InputTitle>
             <Input
               onChange={onChangeOrigin}
-              classOrigin="inputOrigin"
               name="origin"
               type="text"
               placeholder=""
@@ -236,7 +238,6 @@ function ItemSelfRegister() {
             <InputTitle htmlFor="origin">개당 수량 또는 중량 </InputTitle>
             <Input
               onChange={onChangeQuantity}
-              classQuantity="inputQuantity"
               name="quantity"
               type="text"
               placeholder=""
@@ -247,7 +248,6 @@ function ItemSelfRegister() {
             <InputTitle htmlFor="detail">상품설명</InputTitle>
             <Input
               onChange={onChangeDetail}
-              classDetail="inputDetail"
               name="detail"
               type="text"
               placeholder=""
@@ -255,7 +255,7 @@ function ItemSelfRegister() {
             <P>{detailMsg}</P>
           </InputBox>
 
-          <Btn onClick={onsubmit} type="submit" disabled={!isAllValid}>
+          <Btn onClick={onClick} disabled={!isAllValid}>
             상품 등록하기
           </Btn>
         </form>
