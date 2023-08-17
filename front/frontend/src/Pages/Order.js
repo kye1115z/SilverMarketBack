@@ -1,9 +1,10 @@
 import { useState, useCallback } from "react";
 import GlobalStyle from "../GlobalStyle";
-import { Header, HeaderText, Container, Input, InputTitle } from "../styles/basicStyles";
+import { Header, HeaderText, Container, Input, InputTitle, BackBtn } from "../styles/basicStyles";
 import { GoChevronLeft } from "react-icons/go";
 import { styled } from "styled-components";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Order() {
     const detail = {
@@ -29,7 +30,7 @@ function Order() {
     const [isAddrValid, setIsAddrValid] = useState(false);
     const [isAccValid, setIsAccValid] = useState(false);
 
-
+    const allValid = isNameValid && isPhoneValid && isAddrValid && isAccValid;
     // 이름
     const onChangeName = useCallback(async(e) => {
         const currName = e.target.value;
@@ -99,36 +100,52 @@ function Order() {
         }
     })
 
+    
+
     // 서버 전송
     const onClick = async () => {
-        try {   
-            console.log("try!")
-            const res = await axios.options(
-                'http://127.0.0.1:8000/purchaseinfo/', 
-                {
-                    name: name,
-                    contact: phone,
-                    address: addr,
-                    real_name: account,
-                }
-            );
-            console.log("res.data" + res);
+        if(allValid) {
+            try {   
+                console.log("try!")
+                const res = await axios.options(
+                    'http://127.0.0.1:8000/purchaseinfo/', 
+                    {
+                        name: name,
+                        contact: phone,
+                        address: addr,
+                        real_name: account,
+                    }
+                );
+                console.log("res.data" + res);
+            }
+            catch (e) {
+                console.error(e);
+            }
+        } else {
+            alert("모든 정보를 입력해주세요!")
         }
-        catch (e) {
-            console.error(e);
-        }
-
     }
+
+
+    const navigate = useNavigate();
+    
+    const location = useLocation();
+    console.log(location.state.info);
+
+
+
 
     return(
         <>
         <GlobalStyle />
         <Header>
+            <BackBtn onClick={() => navigate(-1)}>
             <GoChevronLeft style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center",
                 width: "1.5rem", height: "1.5rem"
             }}/>
             <HeaderText>구매</HeaderText>
+            </BackBtn>
         </Header>
         <Container style={{
             paddingTop: "0px", 
@@ -205,15 +222,15 @@ function Order() {
                 }}>* 입금 확인 후 상품이 준비됩니다.</P>
                 <InnerBox>
                     <InfoN>농협</InfoN>
-                    <InfoC>{detail.bank}</InfoC>
+                    <InfoC>{location.state.info.bank}</InfoC>
                 </InnerBox>
                 <InnerBox>
                     <InfoN>계좌번호</InfoN>
-                    <InfoC>{detail.account}</InfoC>
+                    <InfoC>{location.state.info.bank_number}</InfoC>
                 </InnerBox>
                 <InnerBox>
                     <InfoN>이름</InfoN>
-                    <InfoC>{detail.name}</InfoC>
+                    <InfoC>{location.state.info.bank_name}</InfoC>
                 </InnerBox>
             </InfoBox>
         </Container>

@@ -64,3 +64,10 @@ export const InputTitle = styled.p`
     margin-bottom: 5px;
     /* font-weight: bold; */
 `;
+
+export const BackBtn = styled.button`
+background-color: transparent;
+border: none;
+display: flex;
+align-items: center;
+`;

@@ -53,7 +53,10 @@ function Detail() {
 
     const navigate = useNavigate();
     const onBuyClick = () => {
-        navigate("/order")
+        
+        navigate('/order', {
+            state: { info }
+        })
     }
 
     const [select, setSelect] = useState(true);
@@ -71,7 +74,7 @@ function Detail() {
         <Header style={{
             justifyContent: "space-between", 
             padding: "2.6rem 35px 10px 30px"}}>
-            <DetailButton>
+            <DetailButton onClick={() => navigate(-1)}>
                 <GoChevronLeft style={{
                     display: "inline-flex", alignItems: "center", justifyContent: "center",
                     width: "1.5rem", height: "1.5rem"
