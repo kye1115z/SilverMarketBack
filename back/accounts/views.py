@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import User
 from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
 
 #로그인 POST api
 class Login(APIView):
@@ -42,6 +44,11 @@ class Register(APIView):
         User.objects.create_user(username=username, password=password, email = email, phone = phone, address = address)
         
         return Response({"detail": "회원가입이 성공적으로 완료되었습니다!"}, status=status.HTTP_201_CREATED)
+    
+    def options(self, request, *args, **kwargs):
+        response = super().options(request, *args, **kwargs)
+        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        return response
     
     #회원 정보 받아오기 GET api (마이페이지 용도)
     def get(self, request, username):
