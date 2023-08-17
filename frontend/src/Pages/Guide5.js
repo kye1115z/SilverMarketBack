@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-function Guide1() {
+function Guide5() {
   const Btn = styled.button`
     width: 40%;
     height: 48px;
@@ -10,18 +10,18 @@ function Guide1() {
     color: white;
     font-size: 16px;
     position: absolute;
-    bottom: -100px;
+    bottom: -400px;
     left: 30px;
   `;
   return (
     <>
-      <div className="Guide1">
+      <div className="Guide5">
         <Btn onClick={onsubmit} type="submit">
-          다음
+          완료
         </Btn>
-        <img className="Guide1_image" alt="guide1" src="img/guide1.png"></img>
+        <img className="Guide5_image" alt="guide5" src="img/guide5.png"></img>
       </div>
     </>
   );
 }
-export default Guide1;
+export default Guide5;

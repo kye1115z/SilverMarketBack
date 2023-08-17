@@ -183,6 +183,9 @@ function ItemSelfRegister() {
         <HeaderText>상품 직접 등록하기</HeaderText>
       </Header>
       <Container style={{ paddingTop: "0px" }}>
+        <div>
+          <InputTitle htmlFor="image">사진 등록하기</InputTitle>
+        </div>
         <form>
           <InputBox>
             <InputTitle htmlFor="name">상품명</InputTitle>

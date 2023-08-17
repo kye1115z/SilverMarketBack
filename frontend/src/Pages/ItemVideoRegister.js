@@ -1,7 +1,6 @@
 import GlobalStyle from "../GlobalStyle";
 import { Container, Header, HeaderText } from "../styles/basicStyles";
 import { GoChevronLeft } from "react-icons/go";
-import { styled } from "styled-components";
 
 function ItemVideoRegister() {
   return (
