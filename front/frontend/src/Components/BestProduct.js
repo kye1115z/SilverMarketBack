@@ -1,9 +1,29 @@
 import GlobalStyle from "../GlobalStyle";
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function BestProduct(lists) {
+    const navigate = useNavigate();
+    const [id, setId] = useState("")
+    useEffect(()=>{
+        setId(lists.id);
+        // getID()
+    }, [])
+
+    // const getID = (id) => {axios.get(
+    //     `http://127.0.0.1:8000/api/products/${id}`
+    // )
+    //     .then((response)=>console.log(response))
+    // }
+
+
     const onClick = () => {
-        alert("클릭!")
+        setId(lists.id)
+        navigate('detail', {
+            state: { id }
+        })
     }
 
     return (
@@ -13,7 +33,7 @@ function BestProduct(lists) {
             <ImgButton onClick={onClick}> 
                 <img src={lists.icon} width="100%" height="80%" alt="best"/>
             </ImgButton>
-            <InfoButton>
+            <InfoButton onClick={onClick}>
                 <Info>{lists.name}</Info>
                 <Price>5,000₩</Price>
             </InfoButton>

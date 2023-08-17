@@ -24,11 +24,9 @@ function Home() {
         [3, "유제품", "../img/diary.svg", '1₩'],
         [4, "고기", "../img/meat.svg", '500,000₩']
     ]
-    //반복 함수. v로 읽음.
-    const CateList = lists.map((v) => (<CategoryList name={v[1]} icon={v[2]}/>))
-    const BestList = best.map((v) => (<BestProduct name={v[1]} icon={v[2]} price={v[3]}/>))
-    
+        
     const [product, setProduct] = useState();
+    const CateList = lists.map((v) => (<CategoryList name={v[1]} icon={v[2]}/>))
 
     //리스트 받아오기
     const getProduct = async() => {
@@ -47,10 +45,12 @@ function Home() {
     useEffect(()=>{
         getProduct()
     }, [])
-    
-    console.log("product: " + product)
 
+    //반복 함수. v로 읽음.
+    // const CateList = product.map((v) => (<CategoryList name={v.name} icon={v.photo}/>))
+    // const BestList = product.map((v) => (<BestProduct name={v[1]} icon={v[2]} price={v[3]}/>))
 
+        
     return (
         <> 
         <GlobalStyle />
@@ -90,7 +90,9 @@ function Home() {
                                 <More href="/signup">더 보기</More>
                             </Title>
                         </Center>
-                        <Center className="Category" style={{justifyContent: "space-around"}}>
+                        <Center 
+                            className="Category" 
+                            style={{justifyContent: "space-around"}}>
                             {CateList}
                         </Center>
                     </Center>
@@ -101,9 +103,14 @@ function Home() {
                                 <More href="/signup">더 보기</More>
                             </Title>
                         </Center>
-                        <Center className="Bestlist" style={{display: "flow"}}>
-                            {BestList}
-                        </Center>
+                        {product&&product.map((item, index) => 
+                        <Box 
+                            key={index}
+                            className="BestList" 
+                            style={{display: "flow"}}>
+                            <BestProduct name={item.name} icon={item.photo} price={item.id} id={item.id} />
+                        </Box>
+                        )}
                     </Center>
                 </Container>
                 <Footer />
@@ -158,4 +165,8 @@ const More = styled.a`
     @media (min-width: 768px) {
     font-size: 1.3em;
     }
+`;
+
+const Box = styled.div`
+    width: 100%;
 `;

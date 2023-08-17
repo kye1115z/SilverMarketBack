@@ -5,6 +5,7 @@ import { GoChevronLeft, GoSearch, GoHeartFill } from "react-icons/go";
 import DetailSlider from "../Components/DetailSlider";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useLocation } from 'react-router-dom'; 
 
 
 function Detail() {
@@ -27,6 +28,9 @@ function Detail() {
 
     }
 
+    const location = useLocation();
+    console.log(location.state);
+
     const navigate = useNavigate();
     const onBuyClick = () => {
         navigate("/order")
@@ -39,14 +43,7 @@ function Detail() {
         console.log(select)
     }
 
-    // const onClick = (func) => {
-    //     if( func === "back") {
-    //         alert("뒤로 가기")
-    //     }
-    //     else if( func === "search") {
-    //         alert("검색")
-    //     }
-    // }
+
 
     return(
         <>
@@ -214,4 +211,3 @@ const BuyBtn = styled.button`
     font-size: 1.2rem;
     background-color: #23AA49;
 `;
-
