@@ -118,7 +118,7 @@ function Detail() {
                 <p style={{
                     fontSize: "1.2rem", fontWeight: "bolder", marginBottom: "15px"
                 }}>
-                    판매 정보
+                    판매 정보.
                 </p>
                 <InnerBox>
                     <InfoN>원산지</InfoN>
