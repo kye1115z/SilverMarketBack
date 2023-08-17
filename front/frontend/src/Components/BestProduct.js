@@ -8,15 +8,8 @@ function BestProduct(lists) {
     const navigate = useNavigate();
     const [id, setId] = useState("")
     useEffect(()=>{
-        setId(lists.id);
-        // getID()
+        setId(lists.id)
     }, [])
-
-    // const getID = (id) => {axios.get(
-    //     `http://127.0.0.1:8000/api/products/${id}`
-    // )
-    //     .then((response)=>console.log(response))
-    // }
 
 
     const onClick = () => {

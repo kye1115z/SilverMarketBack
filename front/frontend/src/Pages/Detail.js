@@ -4,8 +4,9 @@ import { Header, Container } from "../styles/basicStyles"
 import { GoChevronLeft, GoSearch, GoHeartFill } from "react-icons/go";
 import DetailSlider from "../Components/DetailSlider";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom'; 
+import axios from "axios";
 
 
 function Detail() {
@@ -30,6 +31,25 @@ function Detail() {
 
     const location = useLocation();
     console.log(location.state);
+
+    useEffect(()=>{
+        getID()
+    }, [])
+
+    const [info, setInfo] = useState({});
+    //리스트 받아오기
+    const getID = async() => {
+        try {
+            const res = await axios.get(
+                `http://127.0.0.1:8000/api/products/${location.state.id}`
+                )
+            console.log(res.data)
+            setInfo(res.data)
+        }
+        catch(e) {
+            console.log(e)
+        }
+    };
 
     const navigate = useNavigate();
     const onBuyClick = () => {
@@ -65,14 +85,14 @@ function Detail() {
             </DetailButton>
         </Header>
         <Container style={{paddingTop: "0px"}}>
-            <DetailSlider />
+            <DetailSlider info={info} />
             <SellerBox>
-                <Img src={detail.img} />
+                <Img src={info.seller_photo} />
                 <p className="name" 
                     style={{
                         fontSize: "1.1rem"
                 }}>
-                    {detail.name}
+                    {info.person_name}
                 </p>
             </SellerBox>
             <TopBox>
@@ -81,14 +101,14 @@ function Detail() {
                         fontSize: "1.5rem", fontWeight: "bolder",
                         marginBottom: "10px", lineHeight: "110%"
                     }}>
-                    {detail.product}
+                    {info.products_name}
                 </p>
                 <p className="price"
                     style={{
                         fontSize: "1.2rem", color: "#FF324B",
                         fontWeight: "bold"
                     }}>
-                    {detail.price}
+                    {info.price}
                 </p>
             </TopBox>
             <InfoBox>
@@ -99,23 +119,23 @@ function Detail() {
                 </p>
                 <InnerBox>
                     <InfoN>원산지</InfoN>
-                    <InfoC>{detail.origin}</InfoC>
+                    <InfoC>{info.hometown}</InfoC>
                 </InnerBox>
                 <InnerBox>
                     <InfoN>구성</InfoN>
-                    <InfoC>{detail.comp}</InfoC>
+                    <InfoC>{info.organize}</InfoC>
                 </InnerBox>
                 <InnerBox>
                     <InfoN>총 중량</InfoN>
-                    <InfoC>{detail.totalW}</InfoC>
+                    <InfoC>{info.whole_weight}</InfoC>
                 </InnerBox>
                 <InnerBox>
                     <InfoN>개당 중량</InfoN>
-                    <InfoC>{detail.perW}</InfoC>
+                    <InfoC>{info.separate_weight}</InfoC>
                 </InnerBox>
                 <InnerBox>
                     <InfoN>상세 설명</InfoN>
-                    <InfoC>{detail.more}</InfoC>
+                    <InfoC>{info.description}</InfoC>
                 </InnerBox>
             </InfoBox>
         </Container>

@@ -16,6 +16,11 @@ const items = [
 export default class DetailSlider extends Component {
 
     render() {
+        const { info } = this.props;
+        console.log(info)
+        const photo = info.photo;
+        console.log(photo)
+
         const settings = {
             dots: true,
             infinite: true,

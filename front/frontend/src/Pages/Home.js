@@ -108,7 +108,7 @@ function Home() {
                             key={index}
                             className="BestList" 
                             style={{display: "flow"}}>
-                            <BestProduct name={item.name} icon={item.photo} price={item.id} id={item.id} />
+                            <BestProduct name={item.products_name} icon={item.photo} price={item.id} id={item.id} />
                         </Box>
                         )}
                     </Center>
