@@ -6,7 +6,7 @@ from users.models import User
 #디테일 페이지 역시 이 모델을 사용할 수 있도록 수정함(08.15)
 class Product(models.Model):
     id = models.AutoField(primary_key=True) #등록된 상품의 인덱스 번호
-    photo = models.ImageField(upload_to='products/') #상품 사진
+    photo = models.ImageField(upload_to='products/', null = True) #상품 사진, null 허용함
     products_name = models.CharField(max_length=100) #상품명
     price = models.CharField(max_length=100) #상품가격
     category = models.CharField(max_length=50) #상품 카테고리
