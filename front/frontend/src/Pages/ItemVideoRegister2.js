@@ -81,6 +81,7 @@ const Text = styled.p`
   width: 80%;
   margin-top: 20px;
   line-height: 120%;
+  font-weight: bold;
 `;
 const Submit = styled.button`
   width: 75vw;
