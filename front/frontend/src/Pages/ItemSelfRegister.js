@@ -131,7 +131,7 @@ function ItemSelfRegister() {
     isQuantityValid &&
     isDetailValid;
 
-  // 제출버튼
+  /* 제출버튼
   const navigate = useNavigate();
   const onClick = async (e) => {
     e.preventDefault();
@@ -156,6 +156,21 @@ function ItemSelfRegister() {
       console.error(e);
   }
   };
+  */
+
+   // 제출버튼
+   const navigate = useNavigate();
+   const onClick = () => {
+     console.log(isCategoryValid);
+     console.log(isNameValid);
+     console.log(isPriceValid);
+     console.log(isOriginValid);
+     console.log(isQuantityValid);
+     console.log(isDetailValid);
+ 
+     alert("상품이 등록되었습니다.");
+     navigate("/login");
+   };
 
   // 버튼 색상
   const [color, setColor] = useState("");
