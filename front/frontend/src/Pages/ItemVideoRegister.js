@@ -3,6 +3,7 @@ import GlobalStyle from "../GlobalStyle";
 import { Container, Header, HeaderText } from "../styles/basicStyles";
 import { GoChevronLeft } from "react-icons/go";
 import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 
 function ItemVideoRegister() {
 
@@ -33,12 +34,6 @@ function ItemVideoRegister() {
     checkedItemHandler(value, e.target.checked)
   }
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-
-    console.log('checkedList: ', checkedList);
-  },
-  [checkedList])
 
 
   const [allow, setAllow] = useState(false);
@@ -88,41 +83,70 @@ function ItemVideoRegister() {
     if (e.target.files[0]) {
       fileReader.readAsDataURL(e.target.files[0])
     }
-    // 읽기 동작이 성공적으로 완료되었을 때
-    // fileReader.onload = () => {
-    //   const fileType = e.target.files[0].type.split("/")[0]
 
-    //   // video일 때 시간 제한 16초
-    //   if (fileType === "video") {
-    //     let videoElement = document.createElement("video");
-    //     videoElement.src = fileReader.result
-    //     /*
-    //       video 길이 제한!
-    //       videoElement의 readyState가 4면 비디오가 로딩이 된 것이므로 길이를 판별할 수 있다
-    //       video가 재생할 수 있는 상태로 만드는 과정이 비동기적으로 실행되기 때문에
-    //       setInterval로 비디오가 로딩된 상태가 될 때까지 계속 확인하면서 기다려준다
-    //     */
-    //     const timer = setInterval(() => {
-    //       if (videoElement.readyState == 4) {
-    //         if (videoElement.duration > 300) {
-    //           alert("동영상의 길이가 5분보다 길면 안됩니다")
-    //         } else {
-    //           setFile(
-    //             {
-    //               fileObject: e.target.files[0],
-    //               preview_URL: fileReader.result,
-    //               type: fileType
-    //             }
-    //           )
-    //         }
-    //         clearInterval(timer);
-    //       }
-    //     }, 500);
-    //   }
+    //읽기 동작이 성공적으로 완료되었을 때
+    fileReader.onload = () => {
+      const fileType = e.target.files[0].type.split("/")[0]
 
-    // }
+      // video일 때 시간 제한 16초
+      if (fileType === "video") {
+        let videoElement = document.createElement("video");
+        videoElement.src = fileReader.result
+        /*
+          video 길이 제한!
+          videoElement의 readyState가 4면 비디오가 로딩이 된 것이므로 길이를 판별할 수 있다
+          video가 재생할 수 있는 상태로 만드는 과정이 비동기적으로 실행되기 때문에
+          setInterval로 비디오가 로딩된 상태가 될 때까지 계속 확인하면서 기다려준다
+        */
+        const timer = setInterval(() => {
+          if (videoElement.readyState == 4) {
+            if (videoElement.duration > 300) {
+              alert("동영상의 길이가 5분보다 길면 안됩니다")
+            } else {
+              setFile(
+                {
+                  fileObject: e.target.files[0],
+                  preview_URL: fileReader.result,
+                  type: fileType
+                }
+              )
+            }
+            clearInterval(timer);
+          }
+        }, 500);
+      }
+
+    }
   }
 
+
+  // 보내기
+  const onClick = async (e) => {
+    e.preventDefault();
+    // const formData = new FormData();
+    // formData.append('file', img);
+    const fileReader = new FileReader();
+    if (e.target.files[0]) {
+      fileReader.readAsDataURL(video)
+    }
+
+    try {   
+      console.log("try!")
+      const res = await axios.post(
+          'http://127.0.0.1:8000/api/videos/', 
+          {
+              title: "상품",
+              video_file: fileReader.result,
+          }
+      );
+      console.log(res);
+      // alert("회원가입에 성공했습니다!");
+      // navigate("/login");
+  }
+  catch (e) {
+      console.error(e);
+  }
+  };
   return (
     <>
       <GlobalStyle />
@@ -162,7 +186,6 @@ function ItemVideoRegister() {
           </Container>
         </Box>
         <Button 
-          onClick={onSubmit}
           disabled={allow}
         >
           동영상 선택하기

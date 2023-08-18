@@ -135,15 +135,19 @@ function ItemSelfRegister() {
   const navigate = useNavigate();
   const onClick = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', img);
+    // const formData = new FormData();
+    // formData.append('file', img);
+    const fileReader = new FileReader();
+    if (e.target.files[0]) {
+      fileReader.readAsDataURL(img)
+    }
 
     try {   
       console.log("try!")
       const res = await axios.post(
           'http://127.0.0.1:8000/api/products/', 
           {
-              photo: formData,
+              photo: fileReader.result,
               products_name: name,
               category: category,
               separate_weight: quantity,
@@ -177,13 +181,6 @@ function ItemSelfRegister() {
   //파일 선택
   const [img, setImg] = useState();
   const onChangeImg = async (e) => {
-    // const formData = new FormData();
-    // formData.append('file', e.target.files[0]);
-    // const res = await apiClient.post(
-    //   'product/img', formData
-    // );
-    // console.log(res.data.location)
-
     setImg(e.target.files[0]);
   } 
 
