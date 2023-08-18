@@ -157,7 +157,6 @@ function ItemVideoRegister() {
     </>
   );
 }
-
 export default ItemVideoRegister;
 
 const Box = styled.div`
