@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 
+
 #상품 등록, 불러오기, 유저/카테고리별 조회에 이용되는 기본 products 모델
 #디테일 페이지 역시 이 모델을 사용할 수 있도록 수정함(08.15)
 class Product(models.Model):
@@ -31,6 +32,8 @@ class Product(models.Model):
         app_label = 'products'
 
 
+#class Image(models.Model):
+ #   photo = models.ImageField(upload_to='products/')  #다중 이미지 업로드를 위해 주차한 모델
 
 
 
