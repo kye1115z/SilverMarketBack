@@ -5,9 +5,14 @@ from .models import Product
 
 #기본 products JSON 직렬화
 class ProductSerializer(serializers.ModelSerializer):
+    
+    # 이미지 필드를 URL로 변환
+    #photo = serializers.SerializerMethodField()
+    #seller_photo = serializers.SerializerMethodField()
     class Meta:
         model = Product
         fields = '__all__'
+
 
 #상품 사진, 상품명, 가격만을 반환하는 api JSON 직렬화
 class ProductListSerializer(serializers.ModelSerializer):
@@ -20,3 +25,4 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
