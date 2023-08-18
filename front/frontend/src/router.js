@@ -8,12 +8,13 @@ import ConfirmOrder from "./Pages/ConfirmOrder";
 import ItemRegister from "./Pages/ItemRegister";
 import ItemSelfRegister from "./Pages/ItemSelfRegister";
 import ItemVideoRegister from "./Pages/ItemVideoRegister";
+import ItemVideoRegister2 from "./Pages/ItemVideoRegister2";
 import Guide1 from "./Pages/Guide1";
 import Guide2 from "./Pages/Guide2";
 import Guide3 from "./Pages/Guide3";
 import Guide4 from "./Pages/Guide4";
 import Guide5 from "./Pages/Guide5";
-import First from './Pages/First';
+import First from "./Pages/First";
 import Mypage from "./Pages/Mypage";
 function Router() {
   return (
@@ -25,10 +26,11 @@ function Router() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/order" element={<Order />} />
         <Route path="/confirmOrder" element={<ConfirmOrder />} />
-        <Route path='/first' element={<First />} />
+        <Route path="/first" element={<First />} />
         <Route path="/itemregister" element={<ItemRegister />} />
         <Route path="/itemselfregister" element={<ItemSelfRegister />} />
         <Route path="/itemvideoregister" element={<ItemVideoRegister />} />
+        <Route path="/itemvideoregister2" element={<ItemVideoRegister2 />} />
         <Route path="/guide1" element={<Guide1 />} />
         <Route path="/guide2" element={<Guide2 />} />
         <Route path="/guide3" element={<Guide3 />} />
