@@ -131,39 +131,6 @@ function ItemSelfRegister() {
     isQuantityValid &&
     isDetailValid;
 
-  // 제출버튼
-  const navigate = useNavigate();
-  const onClick = async (e) => {
-    e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('file', img);
-    const fileReader = new FileReader();
-    if (e.target.files[0]) {
-      fileReader.readAsDataURL(img)
-    }
-
-    try {   
-      console.log("try!")
-      const res = await axios.post(
-          'http://127.0.0.1:8000/api/products/', 
-          {
-              photo: fileReader.result,
-              products_name: name,
-              category: category,
-              separate_weight: quantity,
-              description: detail,
-              writer: "나"
-          }
-      );
-      console.log(res);
-      // alert("회원가입에 성공했습니다!");
-      // navigate("/login");
-  }
-  catch (e) {
-      console.error(e);
-  }
-  };
-
   // 버튼 색상
   const [color, setColor] = useState("");
   const Btn = styled.button`
@@ -178,15 +145,68 @@ function ItemSelfRegister() {
     font-size: 16px;
   `;
 
-  //파일 선택
-  const [img, setImg] = useState();
-  const onChangeImg = async (e) => {
-    setImg(e.target.files[0]);
-  } 
+    //파일 선택
+    const [file, setFile] = useState({});
+    const onChangeImg = async (e) => {
+      const imageTpye = e.target.files[0].type.includes('image')
+      setFile({
+        url: URL.createObjectURL(e.target.files[0]),
+        image: imageTpye,
+    });
+    console.log(imageTpye)
+    } 
 
-  console.log(img)
 
+  // 제출버튼
+  const navigate = useNavigate();
+  const onClick = async (e) => {
+    e.preventDefault();
 
+    try {   
+      console.log("try!")
+      console.log(name)
+      console.log(category)
+      console.log(quantity)
+      console.log(detail)
+
+      const formData = new FormData(); 
+      formData.append("products_name", name);
+      formData.append("category", category);
+      formData.append("separate_weight", quantity);
+      formData.append("description", detail);
+      formData.append("writer", "후");
+
+      const res = await axios.post(
+          'http://127.0.0.1:8000/api/products/', 
+              formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            }
+          }
+          
+      );
+
+      // formData.append("image", file.url);
+      // const image = await axios.post(
+      //   'http://127.0.0.1:8000/api/imageapp/upload/', 
+      //   {
+      //     image: file.url
+      //   },
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     }
+      //   }
+      // )
+      // console.log(image);
+      // alert("회원가입에 성공했습니다!");
+      // navigate("/login");
+  }
+  catch (e) {
+      console.error(e);
+  }
+  };
 
 
   return (

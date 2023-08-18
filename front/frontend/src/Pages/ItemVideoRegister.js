@@ -7,10 +7,10 @@ import axios from "axios";
 
 function ItemVideoRegister() {
 
+  //체크박스
   const checkBoxList = ['상품 외관', '상품명', '가격', '개당 수량 또는 중량', '총 수량 또는 중량', '상품 설명']
 
   const [checkedList, setCheckedList] = useState([]);
-
   const [isChecked, setIsChecked] = useState(false);
 
   const checkedItemHandler = (value, isChecked) => {
@@ -34,8 +34,6 @@ function ItemVideoRegister() {
     checkedItemHandler(value, e.target.checked)
   }
 
-
-
   const [allow, setAllow] = useState(false);
   const [color, setColor] = useState("#BCC6BF");
 
@@ -47,7 +45,7 @@ function ItemVideoRegister() {
       console.log(allow)
       console.log(color)
     }
-  })
+  }, [checkedList])
 
   console.log(checkedList.length)
 
@@ -62,91 +60,47 @@ function ItemVideoRegister() {
   margin-bottom: 20px;
 `; 
 
-  //비디오 업로드
-  const [file, setFile] = useState({
-    fileObject: "",
-    preview_URL: "../img/fruit.svg",
-    type: "image"
-  });
+  // 비디오 저장
+  const [file, setFile] = useState({});
 
-  let inputRef;
+  const imageUpload = e => {
+    const videoTpye = e.target.files[0].type.includes('video');
 
-  const [video, setVideo] = useState();
-  const onChangeVideo = async (e) => {
-    setVideo(e.target.files[0]);
-  } 
-  const saveImage = (e) => {
+    setFile({
+      url: URL.createObjectURL(e.target.files[0]),
+      video: videoTpye,
+    });
+    console.log(videoTpye);
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // 미리보기 url 만들기
-    const fileReader = new FileReader();
-    // 파일이 존재하면 file 읽기
-    if (e.target.files[0]) {
-      fileReader.readAsDataURL(e.target.files[0])
-    }
+    console.log("img")
 
-    //읽기 동작이 성공적으로 완료되었을 때
-    fileReader.onload = () => {
-      const fileType = e.target.files[0].type.split("/")[0]
-
-      // video일 때 시간 제한 16초
-      if (fileType === "video") {
-        let videoElement = document.createElement("video");
-        videoElement.src = fileReader.result
-        /*
-          video 길이 제한!
-          videoElement의 readyState가 4면 비디오가 로딩이 된 것이므로 길이를 판별할 수 있다
-          video가 재생할 수 있는 상태로 만드는 과정이 비동기적으로 실행되기 때문에
-          setInterval로 비디오가 로딩된 상태가 될 때까지 계속 확인하면서 기다려준다
-        */
-        const timer = setInterval(() => {
-          if (videoElement.readyState == 4) {
-            if (videoElement.duration > 300) {
-              alert("동영상의 길이가 5분보다 길면 안됩니다")
-            } else {
-              setFile(
-                {
-                  fileObject: e.target.files[0],
-                  preview_URL: fileReader.result,
-                  type: fileType
-                }
-              )
-            }
-            clearInterval(timer);
-          }
-        }, 500);
-      }
-
-    }
-  }
-
-
-  // 보내기
-  const onClick = async (e) => {
-    e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('file', img);
-    const fileReader = new FileReader();
-    if (e.target.files[0]) {
-      fileReader.readAsDataURL(video)
-    }
 
     try {   
       console.log("try!")
+
+      const formData = new FormData(); 
+      formData.append("title", "맛있는 고구마");
+      formData.append("video_file", file.url);
+
       const res = await axios.post(
-          'http://127.0.0.1:8000/api/videos/', 
+          'http://127.0.0.1:8000/api/videos/', formData,
           {
-              title: "상품",
-              video_file: fileReader.result,
-          }
+            headers: {
+              "Content-Type": "multipart/form-data",
+            }
+          },
+          
       );
       console.log(res);
-      // alert("회원가입에 성공했습니다!");
-      // navigate("/login");
   }
   catch (e) {
       console.error(e);
   }
-  };
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -162,7 +116,7 @@ function ItemVideoRegister() {
         />
         <HeaderText>상품 동영상으로 등록하기</HeaderText>
       </Header>
-      <Container style={{paddingTop: "5px"}}>
+      <Container>
         <Box>
           <Container>
             <Text style={{
@@ -185,17 +139,18 @@ function ItemVideoRegister() {
             ))}
           </Container>
         </Box>
-        <Button 
+        <Button
           disabled={allow}
         >
           동영상 선택하기
           <VideoInput 
             type="file"
             accept="video/*"
-            onChange={onChangeVideo}
+            onChange={imageUpload}
             />
         </Button>
-        <Submit>
+        {file.video && <video src={file.url} controls width="350px" />}
+        <Submit onClick={onSubmit}>
           동영상 보내기
         </Submit>
       </Container>
