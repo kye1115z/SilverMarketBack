@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'videoapp',
     'post',
     'purchaseinfo',
-    
+    'imageapp',
 ]
 
 MIDDLEWARE = [
