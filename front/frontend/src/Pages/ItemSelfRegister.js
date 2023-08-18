@@ -135,12 +135,15 @@ function ItemSelfRegister() {
   const navigate = useNavigate();
   const onClick = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', img);
+
     try {   
       console.log("try!")
       const res = await axios.post(
           'http://127.0.0.1:8000/api/products/', 
           {
-              photo: "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
+              photo: formData,
               products_name: name,
               category: category,
               separate_weight: quantity,
@@ -171,6 +174,24 @@ function ItemSelfRegister() {
     font-size: 16px;
   `;
 
+  //파일 선택
+  const [img, setImg] = useState();
+  const onChangeImg = async (e) => {
+    // const formData = new FormData();
+    // formData.append('file', e.target.files[0]);
+    // const res = await apiClient.post(
+    //   'product/img', formData
+    // );
+    // console.log(res.data.location)
+
+    setImg(e.target.files[0]);
+  } 
+
+  console.log(img)
+
+
+
+
   return (
     <>
       <GlobalStyle />
@@ -187,9 +208,18 @@ function ItemSelfRegister() {
         <HeaderText>상품 직접 등록하기</HeaderText>
       </Header>
       <Container style={{ paddingTop: "0px" }}>
-        <div>
-          <InputTitle htmlFor="image">사진 등록하기</InputTitle>
-        </div>
+        <InputBox style={{width: "80%"}}>
+        <InputTitle htmlFor="image">사진 등록하기</InputTitle>
+        <InputBtn>
+          <input
+              className="inputName"
+              name="name"
+              type="file"
+              accept="image/*"
+              onChange={onChangeImg}
+            />
+        </InputBtn>
+        </InputBox>
         <form>
           <InputBox>
             <InputTitle htmlFor="name">상품명</InputTitle>
@@ -270,6 +300,14 @@ const InputBox = styled.div`
   margin-bottom: 10px;
 `;
 
+const InputBtn = styled.button`
+  width: 70px;
+  height: 50px;
+  background-color: transparent;
+  margin-bottom: 10px;
+  border: none;
+`;
+
 const P = styled.p`
   font-size: 0.85rem;
   color: red;
@@ -280,3 +318,4 @@ const Select = styled.select`
   height: 30px;
   font-size: 16px;
 `;
+
