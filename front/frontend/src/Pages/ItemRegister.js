@@ -10,7 +10,6 @@ import {
   Button,
 } from "../styles/basicStyles";
 import { GoChevronLeft } from "react-icons/go";
-import { Title, Center } from "../styles/basicStyles.js";
 
 export default function ItemRegister() {
   const Button = styled.button`
@@ -48,7 +47,7 @@ export default function ItemRegister() {
         </row>
         <Button 
           style={{width: "75vw", height: "136px"}}
-          onClick={() => {window.location.href="/guide1"}}>
+          onClick={() => {window.location.href="/guide"}}>
             <p style={{fontSize: "0.8rem", fontWeight: "normal"}}>등록 방법을 모르겠다면?</p>
             상품 등록 가이드 보기
         </Button>
